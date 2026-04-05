@@ -16,14 +16,17 @@ require_once 'Validation.php';
 $user_id = $_SESSION['id'];
 $current_lang = $_SESSION['lang'] ?? 'en'; // تحديد اللغة الحالية للعرض
 
+// إضافة مهمة جديدة
 if (isset($_POST["addtask"])) {
     $task_ar = Validation::data($_POST["task_ar"]);
     $task_en = Validation::data($_POST["task_en"]);
+    $task_ar_desc = Validation::data($_POST["task_ar_desc"]);
+    $task_en_desc = Validation::data($_POST["task_en_desc"]);
 
-    if (!empty($task_ar) && !empty($task_en)) { 
+    if (!empty($task_ar) && !empty($task_en) && !empty($task_ar_desc) && !empty($task_en_desc)) { 
 
-        $stmt = $conn->prepare("INSERT INTO tasks (task_ar, task_en, user_id) VALUES (?, ?, ?)");
-        $stmt->bind_param("ssi", $task_ar, $task_en, $user_id);
+        $stmt = $conn->prepare("INSERT INTO tasks (task_ar, task_en, task_ar_desc, task_en_desc, user_id) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssi", $task_ar, $task_en, $task_ar_desc, $task_en_desc, $user_id);
         $stmt->execute();
         $stmt->close();
     }
@@ -110,8 +113,15 @@ if (isset($_POST["bulk_delete"])) {
         <div class="todo-card">
             <h2><?php echo $lang['todo_list']; ?></h2> 
             <form action="index.php" method="post" class="todo-form">
-                <input type="text" name="task_en" placeholder="Task in English" id="task-input" required>
-                <input type="text" name="task_ar" placeholder="المهمة بالعربي" id="task-input" required>
+                <div  name="task_name">
+                    <input type="text" name="task_en" placeholder="Task in English" id="task-input" required>
+                    <input type="text" name="task_ar" placeholder="المهمة بالعربي" id="task-input" required>
+                </div>
+                <div name="task_desc">
+
+                    <input type="text" name="task_en_desc" placeholder="Task Description" id="task-input" required>
+                    <input type="text" name="task_ar_desc" placeholder="وصف المهمة" id="task-input" required>
+                </div>
                 <button type="submit" name="addtask" id="add-btn"><i class="fa-notdog fa-solid fa-plus"></i></button>
             </form>
             <form action="index.php" method="post">
