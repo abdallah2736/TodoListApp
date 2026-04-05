@@ -126,7 +126,7 @@ if (isset($_POST["bulk_delete"])) {
             </form>
             <form action="index.php" method="post">
                 <ul class="task-list">
-                    <?php while($run = $result->fetch_assoc()): ?> 
+                    <?php while($run = $result->fetch_assoc()): ?>
                         <li class="task-item <?php echo $run["status"]; ?>">
                             <input type="checkbox" name="tasks[]" value="<?php echo $run["Task_ID"]; ?>">
                             <span class="task-text"><?php echo htmlspecialchars($current_lang == 'ar' ? $run["task_ar"] : $run["task_en"]);?></span>
@@ -141,11 +141,12 @@ if (isset($_POST["bulk_delete"])) {
                     <?php endwhile ?>
                 </ul>
                 
+                <?php if ($result->num_rows > 0): ?>
                 <div class="btn-bulk">
-                    
                     <button type="submit" name="bulk_complete" ><?php echo $lang['Complete_all_selected']; ?></button>
                     <button type="submit" name="bulk_delete" ><?php echo $lang['delete_all_selected']; ?></button>
                 </div>
+                <?php endif; ?>
             </form>
         </div>
     </div>
