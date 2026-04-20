@@ -86,6 +86,11 @@ if (isset($_POST["bulk_delete"])) {
     header("Location: index.php");
 }
 
+
+
+
+// قسم التعليقات 
+
 ?>
 
 
@@ -136,20 +141,16 @@ if (isset($_POST["bulk_delete"])) {
                         <!-- formAddTask  -->
                         <form name="AddTask" action="index.php" method="post">
                             <!-- Enter tasks -->
-                            <div class="input-group mb-3">
-                                <!-- Enter english -->
-                                <span name="task_ar" class="input-group-text">english</span> 
-                                <input type="text" name="task_en_desc" name="task_title" class="form-control" placeholder="Task title" required>
-                                <input ttype="text" name="task_en" class="form-control" placeholder="Task description" required>
-                                <!--  -->
-                            </div>
-                            <div class="input-group mb-3">
-                                <!-- Enter arabic -->
-                                <input type="text" name="task_ar_desc" class="form-control" placeholder="وصف المهمة" required>
-                                <input type="text" name="task_ar" class="form-control" placeholder="عنوان المهمة" required>
-                                <span name="task_ar" class="input-group-text">العربية</span> 
-                                <!--  -->
-                            </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">English</span> 
+                                    <input type="text" name="task_en" class="form-control" placeholder="Task title" lang="en" dir="ltr" required>
+                                    <input type="text" name="task_en_desc" class="form-control" placeholder="Task description" lang="en" dir="ltr" required>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <input type="text" name="task_ar_desc" class="form-control" placeholder="وصف المهمة" lang="ar" dir="rtl" required>
+                                    <input type="text" name="task_ar" class="form-control" placeholder="عنوان المهمة" lang="ar" dir="rtl" required>
+                                    <span class="input-group-text">العربية</span> 
+                                </div>
                             <!-- end Enter tasks -->
                             <button type="submit" name="addtask" class="btn btn-primary w-100  rounded-3 mb-2 mt-3">Add Task</button>
                         </form>
@@ -164,8 +165,25 @@ if (isset($_POST["bulk_delete"])) {
                                 <div class="card-body d-flex justify-content-between align-items-center py-2 px-3">
                                     <!-- task name-checkbox -->
                                     <div class="d-flex align-items-center">
+                                        <!-- checkbox -->
                                         <input class="form-check-input me-3" type="checkbox" name="tasks[]" value="<?php echo $run["Task_ID"]; ?>">
-                                        <span class="<?php echo $run["status"] == "Complete" ? "text-decoration-line-through" : ""; ?> "><?php echo htmlspecialchars($current_lang == 'ar' ? $run["task_ar"] : $run["task_en"]);?></span>
+                                        <!--  -->
+
+                                        <!-- name -->
+                                        <!-- php to javascript -->
+                                        <span 
+                                            id="task-<?php echo $run["Task_ID"]; ?>"
+                                            class="card-TaskItem-TaskTitle <?php echo $run["status"] == "Complete" ? "text-decoration-line-through" : ""; ?>"
+                                            style="cursor: pointer;" 
+                                            data-task-id="<?php echo $run["Task_ID"]; ?>"
+                                            data-task-ar-desc="<?php echo htmlspecialchars($run["task_ar_desc"]); ?>"
+                                            data-task-en-desc="<?php echo htmlspecialchars($run["task_en_desc"]); ?>"
+                                            data-current-lang="<?php echo $current_lang; ?>"
+                                        >
+                                            <?php echo htmlspecialchars($current_lang == 'ar' ? $run["task_ar"] : $run["task_en"]);?>
+                                        </span>
+                                        <!-- end php to javascript -->
+                                        <!-- end name -->
                                     </div>
                                     <!-- end task name-checkbox -->
 
@@ -217,30 +235,75 @@ if (isset($_POST["bulk_delete"])) {
                 <!--end MainCard -->
             </div>
             <!-- end card -->
-
-            <!-- to do: قسم التعليقات -->
-            <div class="col-12 col-md-5 mb-4 d-none">
-                <div class="card shadow-sm">
-                    <div class="card-header text-center">
-                        <h3>تطبيق المهام 2</h3>
-                    </div>
-                    <div class="card-body">
-                        <form id="taskForm2">
-                            <div class="mb-3">
-                                <input type="text" id="taskInput2" class="form-control" placeholder="أدخل مهمة جديدة" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100">إضافة مهمة</button>
-                        </form>
-                        <ul id="taskList2" class="list-group mt-4"></ul>
-                    </div>
-                </div>
-            </div>
-            <!-- to do: قسم التعليقات -->
         </div>
         <!-- end row -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <!-- modal-content -->
+                <div class="modal-content">
+                    <!-- taskTitle -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="TaskTitleModal"><?php echo $current_lang == 'ar' ? 'عنوان المهمة' : 'Task Title'; ?>:</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- end taskTitle -->
+
+                    <!-- modal-body/Comments/Description -->
+                    <div class="modal-body">
+                        <!-- Description -->
+                        <h6 class="mb-3"><?php echo $current_lang == 'ar' ? 'الوصف' : 'Description'; ?>:</h6>
+                        <p id="TaskDescriptionModal"></p>
+                        <!-- end Description -->
+                        
+
+                        <!-- CommentsSection-->
+                        <hr class="my-4">
+                        <h6 class="mb-3"><?php echo $current_lang == 'ar' ? 'التعليقات' : 'Comments'; ?>:</h6>
+                        
+                        <!-- CommentEntry/cancelButton -->
+                        <div class="d-flex flex-column w-100 mb-4">
+                            <!-- CommentEntry -->
+                            <div class=" w-100">
+                                <textarea class="form-control" id="commentTextarea" name="comment" rows="3" lang="ar" dir="rtl"
+                                    placeholder="<?php echo $current_lang == 'ar' ? 'أضف تعليق...' : 'Add a comment...'; ?>"></textarea>
+                            </div>
+                            <!-- end CommentEntry -->
+
+                            <!-- cancelButton-->
+                            <div class="mt-2">
+                                <button type="button" id="submitCommentAdd" class="btn btn-primary btn-sm">
+                                    <?php echo $current_lang == 'ar' ? 'نشر التعليق' : 'Post Comment'; ?>
+                                </button>
+                            </div>
+                            <!-- end cancelButton -->
+                        </div>
+
+                        <!-- List of comments-->
+                        <div id="commentsList">
+                            <!-- Comments upload area-->
+                        </div>
+                        <!-- end listComments -->
+                        <!-- end CommentsSection -->
+                    </div>
+                    <!-- end modal-body/Comments/Description -->
+                    <!--  -->
+
+                    <!-- modal-footer/closeButton -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo $current_lang == 'ar' ? 'إغلاق' : 'Close'; ?></button>
+                    </div>
+                    <!--  -->
+                <!-- end modal-content -->
+                </div>
+            </div>
+        </div>
+        <!-- end Modal -->
     </div>
     <!-- end container -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
