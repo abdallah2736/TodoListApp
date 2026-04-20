@@ -1,51 +1,77 @@
 
 # 📝 PHP To-Do List Web Application
-A simple web application for task lists, created using PHP, HTML, CSS, and MySQL. This application allows users to create an account and log in. They can add, delete, and update tasks through an easy-to-use interface.
 
-## 🌟 Features
-- Create your own account 💻
-- Add new tasks 🆕
-- Mark tasks as completed ✔️
-- Delete tasks ❌
+A web application for managing tasks with multilingual support. Users can create accounts, add and manage tasks with descriptions in English or Arabic, and interact with comments through a dynamic interface.
 
+## ✨ Features
+
+- **User Authentication**: Create accounts and secure login
+- **Task Management**: Add, delete, and update tasks easily
+- **Task Descriptions**: Support for English and Arabic descriptions
+- **Comments**: Add comments to tasks with real-time loading
+- **Like System**: Like and unlike comments without page refresh
+- **Multilingual Support**: Full support for English and Arabic
+- **Responsive Design**: Works on desktop and mobile devices
+- **AJAX Functionality**: Smooth interactions without page reloads
+- **Data Validation**: Input validation and security measures
 
 ## 🛠️ Technologies Used
-- **Frontend**: HTML, CSS
-- **Backend**: PHP, MySQL
+- 🎨 **Frontend**: HTML5, CSS3, Bootstrap 5, JavaScript (AJAX)
+- ⚙️ **Backend**: PHP 8.2.12
+- 🗄️ **Database**: MySQL (MariaDB 10.4.32)
+- 🖥️ **Server**: Apache (XAMPP)
 
-## 📝 Setup Instructions
+## 📊 Database Schema
 
-Follow these steps to set up the project locally:
+### Users Table
+```sql
+CREATE TABLE `users` (
+    `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    `email` varchar(255) NOT NULL,
+    `password` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `email_unique` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
 
-### 1. Set Up the Database
-1. Start your local server using XAMPP
-2. Open phpMyAdmin and create a new database named `todo_app`.
-3. Execute the following queries create the tables:
-   ```sql
-   CREATE DATABASE todo_app;
-   USE todo_app;
-   
-   CREATE TABLE `users` (
-       `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-       `name` varchar(255) NOT NULL,
-       `email` varchar(255) NOT NULL,
-       `password` varchar(255) NOT NULL,
-       PRIMARY KEY (`id`),
-       UNIQUE KEY `email_unique` (`email`)
-   )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+### Tasks Table
+```sql
+CREATE TABLE `tasks` (
+    `Task_ID` int(11) NOT NULL AUTO_INCREMENT,
+    `task_en_desc` text DEFAULT NULL,
+    `task_ar_desc` text DEFAULT NULL,
+    `user_id` int(10) UNSIGNED NOT NULL,
+    `task_en` varchar(255) NOT NULL,
+    `task_ar` varchar(255) NOT NULL,
+    `status` varchar(128) NOT NULL DEFAULT 'pending',
+    PRIMARY KEY (`Task_ID`),
+    FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
 
-   CREATE TABLE `tasks` (
-       `Task_ID` int(11) NOT NULL AUTO_INCREMENT,
-       `user_id` int(10) UNSIGNED NOT NULL,
-       `task` varchar(255) NOT NULL,
-       `status` varchar(128) NOT NULL DEFAULT 'pending',
-       PRIMARY KEY (`Task_ID`),
-       FOREIGN KEY (`user_id`) REFERENCES users(`id`) ON DELETE CASCADE
-   )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-   ```
+### Task Comments Table
+```sql
+CREATE TABLE `task_comments` (
+    `comment_ID` int(11) NOT NULL AUTO_INCREMENT,
+    `Task_ID` int(11) NOT NULL,
+    `comment` mediumtext NOT NULL,
+    `Like` tinyint(1) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`comment_ID`),
+    FOREIGN KEY (`Task_ID`) REFERENCES tasks(`Task_ID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
 
-### 2. Configure the Database Connection
-Edit `DB.php` with your database connection details:
+## 🚀 Setup Instructions
+
+### 1️⃣ Database Setup
+1. Start XAMPP and open phpMyAdmin
+2. Create a new database named `todo_app`
+3. Import the SQL dump or run the table creation queries above
+4. Verify all three tables are created: `users`, `tasks`, and `task_comments`
+
+### 2️⃣ Database Configuration
+Edit `DB.php` with your database details:
 ```php
 <?php
 $host = "localhost";
@@ -53,17 +79,15 @@ $user = "root";
 $password = "";
 $database = "todo_app";
 
-
 $conn = new mysqli($host, $user, $password, $database);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
 $conn->set_charset("utf8mb4");
 ?>
 ```
 
-### 3. Run the Application
-Open a web browser and navigate to `http://localhost/TodoListApp/index.php`.
+### 3️⃣ Run the Application
+Open your browser and go to `http://localhost/TodoListApp/index.php`
