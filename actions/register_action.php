@@ -33,6 +33,8 @@ if (isset($_POST['Register'])) {
         $sql = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$password')";
         if ($conn->query($sql)) {
             $_SESSION['register_success'] = 'Registration successful!';
+            header("Location: ../TodoListApp/Login.php");
+            exit();
         }
     }
 
