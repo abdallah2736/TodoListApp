@@ -219,7 +219,7 @@ if (isset($_POST["bulk_delete"])) {
                                 
                                 <!-- delete all -->
                                 <div class="col-6">
-                                    <button type="submit" name="bulk_delete" class="btn btn-primary w-100 rounded-3 py-2">
+                                    <button type="submit" name="bulk_delete" class="btn btn-primary w-100 rounded-3 py-2" onclick="return confirm('<?php echo $current_lang == 'ar' ? 'هل أنت متأكد من حذف المهام المحددة؟' : 'Are you sure you want to delete the selected tasks?'; ?>');">
                                         <i class="fa-solid fa-trash-can ms-1"></i> All Selected
                                     </button>
                                 </div>
