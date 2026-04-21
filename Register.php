@@ -1,24 +1,17 @@
 <?php
 require 'actions/register_action.php'; 
 require 'lang.php';
-
-$errors = ['register' => $_SESSION['register_error'] ?? ''];
-$success = ['register_success' => $_SESSION['register_success'] ?? ''];
+$message = ""; 
 
 
-function showError($error) {
-    return !empty($error) ? "<p class='errorMessage'>$error</p>" : '';
+if (isset($_SESSION['register_errors'])) {
+    $message = "<p class='errorMessage'>";
+    foreach($_SESSION['register_errors'] as $error) {
+        $message .= "$error <br>";
+    }
+    $message .= "</p>";
+    unset($_SESSION['register_errors']);
 }
-
-function showSuccess($success) {
-    return !empty($success) ? "<p class='successfulMessage'>$success</p>" : '';
-}
-unset($_SESSION['register_error']);
-unset($_SESSION['register_success']);
-
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -39,8 +32,7 @@ unset($_SESSION['register_success']);
         <div class="form-box" id="Register-form">
             <form action="" method="post">
                 <h2><?php echo $lang['Register']; ?></h2>
-                <?php echo showError($errors['register']); ?>
-                <?php echo showSuccess($success['register_success']); ?>
+                <?php echo $message ?>
                 <input type="text" name="name" placeholder="<?php echo $lang['Name']; ?>" required> 
                 <input type="email" name="email" placeholder="<?php echo $lang['Email']; ?>" required>
                 <input type="password" name="password" placeholder="<?php echo $lang['Password']; ?>" required>

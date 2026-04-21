@@ -7,38 +7,58 @@ require_once __DIR__ . '/../Validation.php';
 if (isset($_POST['Register'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-    $checkEmail = $conn->query("SELECT email FROM users WHERE email = '$email'");
-
+    $password = $_POST['password'];
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+    
+    $errors = []; // An array to collect errors
+    
+    // Verify email uniqueness
+    $stmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $checkEmail = $stmt->get_result();
+    
     if ($checkEmail->num_rows > 0) {
-        $_SESSION['register_error'] = 'Email is already registered!';
-    } elseif (!Validation::checkUsername($_POST['name']) || !Validation::_checkEmail($_POST['email']) || !Validation::checkPassword($_POST['password'])) {
-        if (Validation::checkPassword($_POST['password']) == false) {
-            $_SESSION['register_error'] = "Password must be at least 8 characters long and contain at least one number.";
-            header("Location: ../TodoListApp/Register.php");
-            exit();
-        } elseif (Validation::checkUsername($_POST['name']) == false) {
-            $_SESSION['register_error'] = "Only letters and white space allowed in username.";
-            header("Location: ../TodoListApp/Register.php");
-            exit();
-        } elseif (Validation::_checkEmail($_POST['email']) == false) {
-            $_SESSION['register_error'] = "Invalid email format.";
-            header("Location: ../TodoListApp/Register.php");
-            exit();
-        }
+        $errors[] = "Email is already registered!";
+        $_SESSION['register_errors'] = $errors;
         header("Location: ../TodoListApp/Register.php");
         exit();
-    } else {
-        $sql = "INSERT INTO users (name, email, password) VALUES ('$name', '$email', '$password')";
-        if ($conn->query($sql)) {
-            $_SESSION['register_success'] = 'Registration successful!';
-            header("Location: ../TodoListApp/Login.php");
-            exit();
-        }
     }
-
-    header("Location: ../TodoListApp/Register.php");
-    exit();
+    
+    if (!Validation::checkUsername($name)) { // Verify username
+        $errors[] = "Only letters and white space allowed in username.";
+    }
+    
+    if (!Validation::_checkEmail($email)) { // Verify email format
+        $errors[] = "Invalid email format.";
+    }
+    
+    if (!Validation::checkPassword($password)) { // Verify password
+        $errors[] = "Password must be at least 8 characters long and contain at least one number.";
+    }
+    
+    $stmt->close();
+    
+    // If there are errors
+    if (!empty($errors)) {
+        $_SESSION['register_errors'] = $errors;
+        header("Location: ../TodoListApp/Register.php"); 
+        exit();
+    }
+    
+    // Insert the new user
+    $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
+    $stmt->bind_param("sss", $name, $email, $passwordHash);
+    
+    if ($stmt->execute()) {
+        $stmt->close();
+        header("Location: ../TodoListApp/login.php"); 
+        exit();
+    } else {
+        $_SESSION['register_errors'] = ["Database error. Please try again later."];
+        $stmt->close();
+        header("Location: ../TodoListApp/Register.php");
+        exit();
+    }
 }
 ?>
