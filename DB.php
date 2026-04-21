@@ -1,9 +1,6 @@
 <?php
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "todo_app";
 
+require_once __DIR__ . '/.config';
 
 $conn = new mysqli($host, $user, $password, $database);
 
