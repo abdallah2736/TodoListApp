@@ -1,5 +1,6 @@
 <?php
 session_start(); 
+
 require_once __DIR__ . '/../DB.php';
 
 if (isset($_POST['login'])) {
@@ -8,7 +9,7 @@ if (isset($_POST['login'])) {
 
     if (empty($email) || empty($password)) {
         $_SESSION['login_error'] = "Please fill in all fields.";
-        header("Location: ../Login.php"); 
+        header("Location: ../TodoListApp/Login.php"); 
         exit();
     }
 
@@ -21,12 +22,13 @@ if (isset($_POST['login'])) {
             $_SESSION['name'] = $user['name'];
             $_SESSION['email'] = $user['email'];
             $_SESSION['id'] = $user['id']; 
-            header("Location: ../index.php"); 
+            header("Location: ../TodoListApp/index.php"); 
             exit();
         }
     }
 
     $_SESSION['login_error'] = 'Incorrect email or password';
-    header("Location: ../Login.php");
+
+    header("Location: ../TodoListApp/Login.php");
     exit();
 }
