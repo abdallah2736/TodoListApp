@@ -95,7 +95,7 @@ if (isset($_POST["bulk_delete"])) {
 
 
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" <?php echo $current_lang === 'ar' ? 'dir="rtl"' : 'dir="ltr"'; ?>>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -117,14 +117,14 @@ if (isset($_POST["bulk_delete"])) {
 
         <!-- Language button  -->
         <div class="btn-group position-fixed top-0 end-0 p-4 me-6 p-md-5" role="group" aria-label="Language Switcher">
-            <button type="button" onclick="window.location.href='index.php?lang=ar'" class="btn btn-primary">العربية</button>
-            <button type="button" onclick="window.location.href='index.php?lang=en'" class="btn btn-primary">English</button>
+            <button  dir="rtl" type="button" onclick="window.location.href='index.php?lang=ar'" class="btn btn-primary">العربية</button>
+            <button  dir="ltr" type="button" onclick="window.location.href='index.php?lang=en'" class="btn btn-primary">English</button>
         </div>
         <!-- end Language button  -->
 
         <!-- logout button -->
         <div class="position-fixed top-0 end-0 p-4 p-md-5">
-            <button onclick="window.location.href='actions/logout_action.php'" class="btn btn-outline-primary"><i class="fa-solid fa-right-from-bracket"></i></button>
+            <a href="actions/logout_action.php" class="btn btn-outline-primary"><i class="fa-solid fa-right-from-bracket"></i></a>
         </div>
         <!-- end logout button -->
 
@@ -149,7 +149,7 @@ if (isset($_POST["bulk_delete"])) {
                                 <div class="input-group mb-3">
                                     <input type="text" name="task_ar_desc" class="form-control" placeholder="وصف المهمة" lang="ar" dir="rtl" required>
                                     <input type="text" name="task_ar" class="form-control" placeholder="عنوان المهمة" lang="ar" dir="rtl" required>
-                                    <span class="input-group-text">العربية</span> 
+                                    <span  class="input-group-text" dir="rtl" >العربية</span> 
                                 </div>
                             <!-- end Enter tasks -->
                             <button type="submit" name="addtask" class="btn btn-primary w-100  rounded-3 mb-2 mt-3">Add Task</button>
