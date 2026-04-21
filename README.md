@@ -72,22 +72,13 @@ CREATE TABLE `task_comments` (
 4. Verify all three tables are created: `users`, `tasks`, and `task_comments`
 
 ### 2️⃣ Database Configuration
-Edit `DB.php` with your database details:
+Edit `config.php` with your database details:
 ```php
 <?php
 $host = "localhost";
 $user = "root";
 $password = "";
 $database = "todo_app";
-
-$conn = new mysqli($host, $user, $password, $database);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$conn->set_charset("utf8mb4");
-?>
 ```
 
 ### 3️⃣ Run the Application
