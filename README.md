@@ -14,6 +14,7 @@ A web application for managing tasks with multilingual support. Users can create
 - **Responsive Design**: Works on desktop and mobile devices
 - **AJAX Functionality**: Smooth interactions without page reloads
 - **Data Validation**: Input validation and security measures
+- **Error Handling**: Display all validation errors together at once
 
 ## 🛠️ Technologies Used
 - 🎨 **Frontend**: HTML5, CSS3, Bootstrap 5, JavaScript (AJAX)
