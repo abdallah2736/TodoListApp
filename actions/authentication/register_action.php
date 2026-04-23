@@ -1,8 +1,11 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-require_once __DIR__ . '/../DB.php';
-require_once __DIR__ . '/../Validation.php';
+
+require_once __DIR__ . '/../../Config/DB.php';
+require_once __DIR__ . '/../../Validation.php';
 
 if (isset($_POST['Register'])) {
     $name = $_POST['name'];
@@ -21,7 +24,7 @@ if (isset($_POST['Register'])) {
     if ($checkEmail->num_rows > 0) {
         $errors[] = "Email is already registered!";
         $_SESSION['register_errors'] = $errors;
-        header("Location: ../TodoListApp/Register.php");
+        header("Location: /TodoListApp/page/Register.php");
         exit();
     }
     
@@ -42,7 +45,7 @@ if (isset($_POST['Register'])) {
     // If there are errors
     if (!empty($errors)) {
         $_SESSION['register_errors'] = $errors;
-        header("Location: ../TodoListApp/Register.php"); 
+        header("Location: /TodoListApp/page/Register.php"); 
         exit();
     }
     
@@ -52,12 +55,12 @@ if (isset($_POST['Register'])) {
     
     if ($stmt->execute()) {
         $stmt->close();
-        header("Location: ../TodoListApp/login.php"); 
+        header("Location: /TodoListApp/page/Login.php"); 
         exit();
     } else {
         $_SESSION['register_errors'] = ["Database error. Please try again later."];
         $stmt->close();
-        header("Location: ../TodoListApp/Register.php");
+        header("Location: /TodoListApp/page/Register.php");
         exit();
     }
 }

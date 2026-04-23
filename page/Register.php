@@ -1,6 +1,6 @@
 <?php
-require 'actions/register_action.php'; 
-require 'lang.php';
+require __DIR__ . '/../actions/authentication/register_action.php'; 
+require __DIR__ . '/../lang.php';
 $message = ""; 
 
 
@@ -19,7 +19,7 @@ if (isset($_SESSION['register_errors'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
     <title><?php echo $lang['Register']; ?></title>
 </head>
 <body>

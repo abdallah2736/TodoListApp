@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once "DB.php";
+require_once "../../Config/DB.php";
 
 if (isset($_GET["comment_id"]) && isset($_GET["status"])) {
     $comment_id = $_GET["comment_id"];

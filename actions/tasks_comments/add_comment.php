@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require_once "DB.php";
+require_once "../../Config/DB.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Receive JSON   

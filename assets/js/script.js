@@ -44,7 +44,7 @@ document.getElementById('submitCommentAdd').addEventListener('click', function(e
 
 //Function to load comments from the database
 function loadComments(taskID) {
-    fetch("get_comments.php?task_id=" + taskID)
+    fetch("/TodoListApp/actions/tasks_comments/get_comments.php?task_id=" + taskID)
         .then(response => response.json())
         .then(commentsTable => {
             let commentsListSection = document.getElementById('commentsList');
@@ -83,7 +83,7 @@ function loadComments(taskID) {
 function toggleLike(commentID, currentStatus, element) {
     const newStatus = currentStatus == 1 ? 0 : 1;
 
-    fetch("toggle_like.php?comment_id=" + commentID + "&status=" + newStatus)
+    fetch("/TodoListApp/actions/tasks_comments/toggle_like.php?comment_id=" + commentID + "&status=" + newStatus)
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -114,7 +114,7 @@ function addComment(taskID) {
     formData.append('comment', commentText);
     formData.append('task_id', taskID);
     
-    fetch('add_comment.php', {
+    fetch('/TodoListApp/actions/tasks_comments/add_comment.php', {
         method: 'POST',
         body: formData
     }).then(response => response.json()).then(data => {

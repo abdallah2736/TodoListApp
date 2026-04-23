@@ -82,4 +82,4 @@ $database = "todo_app";
 ```
 
 ### 3️⃣ Run the Application
-Open your browser and go to `http://localhost/TodoListApp/index.php`
+Open your browser and go to `http://localhost/TodoListApp/homepage.php`
