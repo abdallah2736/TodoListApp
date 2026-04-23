@@ -127,3 +127,25 @@ function addComment(taskID) {
     }).catch(error => console.error('Error:', error));
 }
 
+// Hide the buttons if no items are selected
+const checkboxsTasks = document.querySelectorAll('input[name="tasks[]"]');
+
+for (const checkbox of checkboxsTasks) {
+    checkbox.addEventListener('change', function() {
+        const checkedCount = document.querySelectorAll('input[name="tasks[]"]:checked').length;
+        toggleCompleteOrDeleteAllButtons(checkedCount);
+    });
+}
+
+function toggleCompleteOrDeleteAllButtons(count) {
+    const CompleteDeleteAllButtons = document.querySelectorAll("#bulkBtn");
+    if (count > 0) {
+        CompleteDeleteAllButtons.forEach(button => {
+            button.classList.remove('d-none');
+        });
+    } else {
+        CompleteDeleteAllButtons.forEach(button => {
+            button.classList.add('d-none');
+        });
+    }
+}

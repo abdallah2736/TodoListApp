@@ -71,9 +71,9 @@
                                 <div class="card-body d-flex justify-content-between align-items-center py-2 px-3">
                                     <!-- task name-checkbox -->
                                     <div class="d-flex align-items-center">
-                                        <!-- checkbox -->
+                                        <!-- //!checkbox -->
                                         <input class="form-check-input me-3" type="checkbox" name="tasks[]" value="<?php echo $run["Task_ID"]; ?>">
-                                        <!--  -->
+                                        <!-- end checkbox -->
 
                                         <!-- name -->
                                         <!-- php to javascript -->
@@ -95,10 +95,12 @@
 
                                     <!-- task actions: complete/delete -->
                                     <div class="d-flex gap-2">
+                                        <!-- complete -->
                                         <?php if ($run["status"] != "Complete"): ?>
                                         <a href="/TodoListApp/actions/authentication/tasks_action.php?Complete=<?php echo $run["Task_ID"]; ?>" class="btn btn-sm border-0 rounded-3" style="background-color: #d1f7e3; color: #28a745;">
-                                            <i class="fa-solid fa-circle-check"></i>
+                                            <i class="fa-solid fa-circle-check"></i> 
                                         </a>
+                                        <!-- delete -->
                                         <?php endif; ?>
                                         <a href="/TodoListApp/actions/authentication/tasks_action.php?Delete=<?php echo $run["Task_ID"]; ?>" class="btn btn-sm border-0 rounded-3" style="background-color: #f8d7da; color: #dc3545;">
                                             <i class="fa-solid fa-trash-can"></i>
@@ -113,25 +115,25 @@
     
                             <!-- task actions: complete all/delete all -->
                             <?php if ($result->num_rows > 0): ?>
-                            <!-- row -->
-                            <div class="row g-2 mt-3">
+                            <!-- //!row -->
+                            <div class="row g-2 mt-3 none">
                                 <!-- complete all -->
                                 <div class="col-6">
-                                    <button type="submit" name="bulk_complete" class="btn btn-primary w-100 rounded-3 py-2">
-                                            <i class="fa-solid fa-circle-check ms-1"></i> All Selected
+                                    <button type="submit" id="bulkBtn" name="bulk_complete" class="btn btn-primary w-100 rounded-3 py-2 d-none">
+                                            <i class="fa-solid fa-circle-check ms-1"></i> Complete All
                                     </button>
                                 </div>
                                 <!-- end complete all -->
                                 
                                 <!-- delete all -->
                                 <div class="col-6">
-                                    <button type="submit" name="bulk_delete" class="btn btn-primary w-100 rounded-3 py-2" onclick="return confirm('<?php echo $current_lang == 'ar' ? 'هل أنت متأكد من حذف المهام المحددة؟' : 'Are you sure you want to delete the selected tasks?'; ?>');">
-                                        <i class="fa-solid fa-trash-can ms-1"></i> All Selected
+                                    <button type="submit" id="bulkBtn" name="bulk_delete" class="btn btn-primary w-100 rounded-3 py-2 d-none" onclick="return confirm('<?php echo $current_lang == 'ar' ? 'هل أنت متأكد من حذف المهام المحددة؟' : 'Are you sure you want to delete the selected tasks?'; ?>');">
+                                        <i class="fa-solid fa-trash-can ms-1"></i> Delete All
                                     </button>
                                 </div>
                                 <!-- end delete all -->
                             </div>
-                            <!-- end row -->
+                            <!-- //!end row -->
                             <?php endif; ?>
                             <!-- end task actions: complete all/delete all -->
                         </form>
