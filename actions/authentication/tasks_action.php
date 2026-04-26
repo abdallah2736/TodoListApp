@@ -3,13 +3,13 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require __DIR__ . '/../../lang.php';
+require __DIR__ . '/../../languages/lang.php';
 
 // الاتصال بقاعده البيانات
 require_once __DIR__ . '/../../Config/DB.php';
 
 // استدعاء ملف التحقق من البيانات
-require_once __DIR__ . '/../../Validation.php';
+require_once __DIR__ . '/../../helpers/validation.php';
 
 $user_id = $_SESSION['id'];
 $current_lang = $_SESSION['lang'] ?? 'en'; // تحديد اللغة الحالية للعرض

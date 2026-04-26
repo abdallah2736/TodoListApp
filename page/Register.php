@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/../actions/authentication/register_action.php'; 
-require __DIR__ . '/../lang.php';
+require __DIR__ . '/../languages/lang.php';
 $message = ""; 
 
 

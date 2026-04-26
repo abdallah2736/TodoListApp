@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/../lang.php'; ?>
+<?php require __DIR__ . '/../languages/lang.php'; ?>
 <?php require __DIR__ . '/../Config/SESSION.php'; ?>
 
 <!DOCTYPE html>

@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
 require_once __DIR__ . '/../../Config/DB.php';
-require_once __DIR__ . '/../../Validation.php';
+require_once __DIR__ . '/../../helpers/validation.php';
 
 if (isset($_POST['Register'])) {
     $name = $_POST['name'];

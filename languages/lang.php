@@ -12,5 +12,5 @@ function get_language_file()
 
     // Get the root directory of the project
     $rootDir = dirname(__FILE__);
-    return $rootDir . "/languages/" . $_SESSION['lang'] . ".php";
+    return $rootDir . "/" . $_SESSION['lang'] . ".php";
 }
