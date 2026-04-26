@@ -1,18 +1,23 @@
 <?php require __DIR__ . "/../Config/SESSION.php"; hasActiveSession(); ?>
 <?php require __DIR__ . "/../actions/authentication/tasks_action.php"; ?>
 <!DOCTYPE html>
-<html lang="ar" <?php echo $current_lang === 'ar' ? 'dir="rtl"' : 'dir="ltr"'; ?>>
+<html lang="<?php echo $current_lang; ?>" <?php echo $current_lang === 'ar' ? 'dir="rtl"' : 'dir="ltr"'; ?>>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo List</title>
+    <title><?php echo $lang['todo_list']; ?></title>
 
     <!-- page icon -->
     <link rel="icon" type="image/x-icon" href="../assets/img/to-do-list.png">
 
     <!-- style -->
     <link rel="stylesheet" href="../assets/css/style-index.css">
+    <?php if ($current_lang === 'ar'): ?>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+    <?php elseif ($current_lang === 'en'): ?>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <?php endif; ?>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css">
 
     <!-- icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -22,14 +27,17 @@
     <div class="container min-vh-100 d-flex flex-column justify-content-center">
 
         <!-- Language button  -->
-        <div class="btn-group position-fixed top-0 end-0 p-4 me-6 p-md-5" role="group" aria-label="Language Switcher">
-            <button  dir="rtl" type="button" onclick="window.location.href='homepage.php?lang=ar'" class="btn btn-primary">العربية</button>
-            <button  dir="ltr" type="button" onclick="window.location.href='homepage.php?lang=en'" class="btn btn-primary">English</button>
+        <div class="btn-group position-fixed top-0 start-0 p-4 ms-5 me-5 p-md-5" role="group" aria-label="<?php echo $lang['language_switcher']; ?>">
+            <?php if ($current_lang === 'en'): ?>
+            <button type="button" onclick="window.location.href='homepage.php?lang=ar'" class="btn btn-primary">العربية</button>
+            <?php elseif ($current_lang === 'ar'): ?>
+            <button type="button" onclick="window.location.href='homepage.php?lang=en'" class="btn btn-primary">English</button>
+            <?php endif; ?>
         </div>
         <!-- end Language button  -->
 
         <!-- logout button -->
-        <div class="position-fixed top-0 end-0 p-4 p-md-5">
+        <div class="position-fixed top-0 start-0 p-4 p-md-5">
             <a href="/TodoListApp/actions/authentication/logout_action.php" class="btn btn-outline-primary"><i class="fa-solid fa-right-from-bracket"></i></a>
         </div>
         <!-- end logout button -->
@@ -41,24 +49,24 @@
                 <!--MainCard -->
                 <div class="card shadow-sm rounded-4 border-0">
                     <div class="card-header text-center rounded-top-4">
-                        <h3 class="p-1 pb-0 pt-2">Todo List</h3>
+                        <h3 class="p-1 pb-0 pt-2"><?php echo $lang['todo_list']; ?></h3>
                     </div>
                     <div class="card-body">
                         <!-- formAddTask  -->
                         <form name="AddTask" action="/TodoListApp/actions/authentication/tasks_action.php" method="post">
                             <!-- Enter tasks -->
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">English</span> 
-                                    <input type="text" name="task_en" class="form-control" placeholder="Task title" lang="en" dir="ltr" required>
-                                    <input type="text" name="task_en_desc" class="form-control" placeholder="Task description" lang="en" dir="ltr" required>
+                                <div class="  mb-3" dir="ltr" >
+                                    <label class="form-label">English</label>
+                                    <input type="text" name="task_en" class="form-control mb-2" placeholder="Task title" lang="en" dir="ltr" required>
+                                    <textarea id="summernote-en" name="task_en_desc"></textarea>
                                 </div>
-                                <div class="input-group mb-3">
-                                    <input type="text" name="task_ar_desc" class="form-control" placeholder="وصف المهمة" lang="ar" dir="rtl" required>
-                                    <input type="text" name="task_ar" class="form-control" placeholder="عنوان المهمة" lang="ar" dir="rtl" required>
-                                    <span  class="input-group-text" dir="rtl" >العربية</span> 
+                                <div class="mb-3" dir="rtl">
+                                    <label class="form-label" dir="rtl">العربية</label>
+                                    <input type="text" name="task_ar" class="form-control mb-2" placeholder="عنوان المهمة" lang="ar" dir="rtl" required>
+                                    <textarea id="summernote-ar" name="task_ar_desc" dir="rtl"></textarea>
                                 </div>
                             <!-- end Enter tasks -->
-                            <button type="submit" name="addtask" class="btn btn-primary w-100  rounded-3 mb-2 mt-3">Add Task</button>
+                            <button type="submit" name="addtask" class="btn btn-primary w-100  rounded-3 mb-2 mt-3"><?php echo $lang['add_task']; ?></button>
                         </form>
                         <!-- end formAddTask  -->
 
@@ -120,15 +128,15 @@
                                 <!-- complete all -->
                                 <div class="col-6">
                                     <button type="submit" id="bulkBtn" name="bulk_complete" class="btn btn-primary w-100 rounded-3 py-2 d-none">
-                                            <i class="fa-solid fa-circle-check ms-1"></i> Complete All
+                                            <i class="fa-solid fa-circle-check ms-1"></i> <?php echo $lang['Complete_all_selected']; ?>
                                     </button>
                                 </div>
                                 <!-- end complete all -->
                                 
                                 <!-- delete all -->
                                 <div class="col-6">
-                                    <button type="submit" id="bulkBtn" name="bulk_delete" class="btn btn-primary w-100 rounded-3 py-2 d-none" onclick="return confirm('<?php echo $current_lang == 'ar' ? 'هل أنت متأكد من حذف المهام المحددة؟' : 'Are you sure you want to delete the selected tasks?'; ?>');">
-                                        <i class="fa-solid fa-trash-can ms-1"></i> Delete All
+                                    <button type="submit" id="bulkBtn" name="bulk_delete" class="btn btn-primary w-100 rounded-3 py-2 d-none" onclick="return confirm('<?php echo $lang['confirm_delete']; ?>');">
+                                        <i class="fa-solid fa-trash-can ms-1"></i> <?php echo $lang['delete_all_selected']; ?>
                                     </button>
                                 </div>
                                 <!-- end delete all -->
@@ -153,7 +161,7 @@
                 <div class="modal-content">
                     <!-- taskTitle -->
                     <div class="modal-header">
-                        <h5 class="modal-title" id="TaskTitleModal"><?php echo $current_lang == 'ar' ? 'عنوان المهمة' : 'Task Title'; ?>:</h5>
+                        <h5 class="modal-title" id="TaskTitleModal"><?php echo $lang['task_title']; ?>:</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <!-- end taskTitle -->
@@ -210,8 +218,35 @@
         <!-- end Modal -->
     </div>
     <!-- end container -->
-
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script src="../assets/js/scriptHomepage.js"></script>
+    <script>
+        $(document).ready(function() {
+            var summernoteConfig = {
+                height: 120,
+                toolbar: [
+                    ['font', ['bold', 'italic', 'underline', 'strikethrough']],
+                    ['color', ['forecolor']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link']]
+                ],
+                callbacks: {
+                    onInit: function() {
+                        $('.note-btn').addClass('btn-sm');
+                    }
+                }
+            };
+            $('#summernote-en').summernote($.extend({}, summernoteConfig, {
+                placeholder: 'Write task details...',
+                lang: 'en-US'
+            }));
+            $('#summernote-ar').summernote($.extend({}, summernoteConfig, {
+                placeholder: 'اكتب تفاصيل المهمة...',
+                lang: 'ar-AR'
+            }));
+        });
+    </script>
 </body>
 </html>

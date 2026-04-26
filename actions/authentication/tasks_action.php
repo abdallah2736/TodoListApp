@@ -18,8 +18,8 @@ $current_lang = $_SESSION['lang'] ?? 'en'; // تحديد اللغة الحالي
 if (isset($_POST["addtask"])) {
     $task_ar = Validation::data($_POST["task_ar"]);
     $task_en = Validation::data($_POST["task_en"]);
-    $task_ar_desc = Validation::data($_POST["task_ar_desc"]);
-    $task_en_desc = Validation::data($_POST["task_en_desc"]);
+    $task_ar_desc = Validation::html($_POST["task_ar_desc"]);
+    $task_en_desc = Validation::html($_POST["task_en_desc"]);
 
     if (!empty($task_ar) && !empty($task_en) && !empty($task_ar_desc) && !empty($task_en_desc)) { 
         

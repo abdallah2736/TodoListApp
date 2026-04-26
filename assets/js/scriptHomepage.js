@@ -44,7 +44,7 @@ function loadComments(taskID) {
             commentsListSection.innerHTML = ''; 
 
             if (commentsTable.length === 0) {
-                commentsListSection.innerHTML = '<p class="text-muted">لا توجد تعليقات بعد</p>';
+                commentsListSection.innerHTML = '<p class="text-muted"></p>';
             } else {
                 commentsTable.forEach(comment => {
                     const likeIcon = comment.Like == 1

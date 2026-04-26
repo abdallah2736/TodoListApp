@@ -28,5 +28,13 @@ class Validation {
         return $input;
     }
 
+    public static function html($input) {
+        $input = trim($input);
+        // السماح بوسوم HTML الآمنة فقط
+        $allowed_tags = '<p><br><b><i><u><strike><ul><ol><li><a><strong><em><span><div>';
+        $input = strip_tags($input, $allowed_tags);
+        return $input;
+    }
+
 }
 ?>

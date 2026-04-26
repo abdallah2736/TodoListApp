@@ -17,5 +17,16 @@ $lang = [
     'Register' => 'Register',
     "Don't have an account?" => "Don't have an account?",
     'Name' => 'Name',
-    'Already have an account?' => 'Already have an account?'
+    'Already have an account?' => 'Already have an account?',
+    'task_title' => 'Task Title',
+    'description' => 'Description',
+    'comments' => 'Comments',
+    'add_comment' => 'Add a comment...',
+    'post_comment' => 'Post Comment',
+    'close' => 'Close',
+    'confirm_delete' => 'Are you sure you want to delete the selected tasks?',
+    'task_title_en_placeholder' => 'Task title',
+    'task_title_ar_placeholder' => 'Task title (Arabic)',
+    'language_switcher' => 'Language Switcher',
+    'no_comments_yet' => 'No comments yet',
 ];
