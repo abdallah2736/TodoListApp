@@ -1,5 +1,3 @@
-
-//
 var Modal = new bootstrap.Modal("#exampleModal"); 
 var triggers = document.querySelectorAll('.card-TaskItem-TaskTitle');
 
@@ -7,13 +5,11 @@ var triggers = document.querySelectorAll('.card-TaskItem-TaskTitle');
 triggers.forEach(button => { // add event listener to each button
     button.addEventListener('click', function(event) {
         event.stopPropagation();
-        // Maintain task_id
+        
         currentTaskId = this.dataset.taskId;
         
-        // Display the task title
         document.getElementById('TaskTitleModal').innerHTML = this.innerText;
         
-        // Show description based on language
         var current_lang = this.dataset.currentLang;
         if (current_lang === 'ar') {
             document.getElementById('TaskDescriptionModal').innerHTML = this.dataset.taskArDesc;
@@ -21,13 +17,10 @@ triggers.forEach(button => { // add event listener to each button
             document.getElementById('TaskDescriptionModal').innerHTML = this.dataset.taskEnDesc;
         }
         
-        // Clear comment field
         document.getElementById('commentTextarea').value = '';
-        
-        // Download comments
+
         loadComments(currentTaskId);
 
-        // Open the Modal
         Modal.show();
     });
 });
@@ -48,7 +41,7 @@ function loadComments(taskID) {
         .then(response => response.json())
         .then(commentsTable => {
             let commentsListSection = document.getElementById('commentsList');
-            commentsListSection.innerHTML = ''; //Clear previous comments
+            commentsListSection.innerHTML = ''; 
 
             if (commentsTable.length === 0) {
                 commentsListSection.innerHTML = '<p class="text-muted">لا توجد تعليقات بعد</p>';

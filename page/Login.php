@@ -1,15 +1,5 @@
-<?php
-
-require __DIR__ . '/../actions/authentication/login_action.php'; //session_start();
-require __DIR__ . '/../lang.php';
-
-$errors = ['login'=> $_SESSION['login_error'] ?? '',];
-
-unset($_SESSION['login_error']);
-function showError($error) {
-    return !empty($error) ? "<p class='errorMessage'>$error</p>" : '';
-}
-?>
+<?php require __DIR__ . '/../lang.php'; ?>
+<?php require __DIR__ . '/../Config/SESSION.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,14 +17,15 @@ function showError($error) {
             <a href="Login.php?lang=ar" class="lang-item">العربية</a>
         </div>
         <div class="form-box" id="login-form">
-            <form action="" method="post">
+            <form method="post">
                 <h2><?php echo $lang['Login']; ?></h2>
-                <?php echo showError($errors['login']); ?>
+                <p class='errorMessage' style="display: none;"></p>
                 <input type="email" name="email" placeholder="<?php echo $lang['Email']; ?>" required>
                 <input type="password" name="password" placeholder="<?php echo $lang['Password']; ?>" required>
-                <button type="submit" name="login"><?php echo $lang['Login']; ?></button>
+                <button type="submit" id="login" name="login"><?php echo $lang['Login']; ?></button>
                 <p><?php echo $lang["Don't have an account?"]; ?> <a href="Register.php"><?php echo $lang['Register']; ?></a></p>
             </form>
         </div>
+        <script src="../assets/js/scriptLogin.js"></script>
 </body>
 </html>

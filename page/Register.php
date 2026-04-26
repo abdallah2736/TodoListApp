@@ -29,8 +29,9 @@ if (isset($_SESSION['register_errors'])) {
             <span class="separator">|</span>
             <a href="Register.php?lang=ar" class="lang-item">العربية</a>
         </div>
+        <!-- //! -->
         <div class="form-box" id="Register-form">
-            <form action="" method="post">
+            <form  method="post">
                 <h2><?php echo $lang['Register']; ?></h2>
                 <?php echo $message ?>
                 <input type="text" name="name" placeholder="<?php echo $lang['Name']; ?>" required> 
@@ -41,5 +42,6 @@ if (isset($_SESSION['register_errors'])) {
             </form>
         </div>
     </div>
+    <script src="../assets/js/scriptRegister.js"></script>
 </body>
 </html>
