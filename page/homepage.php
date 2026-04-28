@@ -1,5 +1,7 @@
+<!-- <? $lang[] = null; ?> -->
 <?php require __DIR__ . "/../Config/SESSION.php"; hasActiveSession(); ?>
 <?php require __DIR__ . "/../actions/authentication/tasks_action.php"; ?>
+
 <!DOCTYPE html>
 <html lang="<?php echo $current_lang; ?>" <?php echo $current_lang === 'ar' ? 'dir="rtl"' : 'dir="ltr"'; ?>>
 <head>
@@ -188,8 +190,8 @@
                             <!-- end CommentEntry -->
 
                             <!-- cancelButton-->
-                            <div class="mt-2">
-                                <button type="button" id="submitCommentAdd" class="btn btn-primary btn-sm">
+                            <div <?php echo $current_lang == 'ar' ? 'dir="ltr"' : 'dir="rtl"'; ?> class="mt-2 ">
+                                <button type="button" id="submitCommentAdd" class="btn btn-primary btn-sm" >
                                     <?php echo $current_lang == 'ar' ? 'نشر التعليق' : 'Post Comment'; ?>
                                 </button>
                             </div>
