@@ -1,14 +1,8 @@
 <?php
 
 $lang = [
-    'Logout'=> 'Logout',
-    'todo_list' => 'Todo List',
-    'enter_new_task' => 'Enter new task:',
+    'todo_list' => 'Todo List', 
     'add_task' => 'Add Task',
-    'complete' => 'Complete',
-    'delete' => 'Delete',
-    'logout' => 'Logout',
-    'languages' => 'Languages',
     'delete_all_selected' => 'Delete All Selected <i class="fa-solid fa-trash-alt"></i>',
     'Complete_all_selected' => 'Complete All Selected <i class="fa-solid fa-check-circle"></i>',
     'Login' => 'Login',
@@ -25,8 +19,6 @@ $lang = [
     'post_comment' => 'Post Comment',
     'close' => 'Close',
     'confirm_delete' => 'Are you sure you want to delete the selected tasks?',
-    'task_title_en_placeholder' => 'Task title',
-    'task_title_ar_placeholder' => 'Task title (Arabic)',
     'language_switcher' => 'Language Switcher',
-    'no_comments_yet' => 'No comments yet',
+    'comment_textarea_error' => 'Comment cannot be empty.',
 ];

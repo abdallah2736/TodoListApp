@@ -171,28 +171,29 @@
                     <!-- modal-body/Comments/Description -->
                     <div class="modal-body">
                         <!-- Description -->
-                        <h6 class="mb-3"><?php echo $current_lang == 'ar' ? 'الوصف' : 'Description'; ?>:</h6>
+                        <h6 class="mb-3"><?php echo $lang['description']; ?>:</h6>
                         <p id="TaskDescriptionModal"></p>
                         <!-- end Description -->
                         
 
                         <!-- CommentsSection-->
                         <hr class="my-4">
-                        <h6 class="mb-3"><?php echo $current_lang == 'ar' ? 'التعليقات' : 'Comments'; ?>:</h6>
+                        <h6 class="mb-3"><?php echo $lang['comments']; ?>:</h6>
                         
                         <!-- CommentEntry/cancelButton -->
                         <div class="d-flex flex-column w-100 mb-4">
                             <!-- CommentEntry -->
                             <div class=" w-100">
                                 <textarea class="form-control" id="commentTextarea" name="comment" rows="3" lang="ar" dir="rtl"
-                                    placeholder="<?php echo $current_lang == 'ar' ? 'أضف تعليق...' : 'Add a comment...'; ?>"></textarea>
+                                    placeholder="<?php echo $lang['add_comment']; ?>" required></textarea>
                             </div>
+                            <P id="commentTextareaError" class="d-none"><?php echo $lang['comment_textarea_error']; ?></P>
                             <!-- end CommentEntry -->
 
                             <!-- cancelButton-->
                             <div <?php echo $current_lang == 'ar' ? 'dir="ltr"' : 'dir="rtl"'; ?> class="mt-2 ">
                                 <button type="button" id="submitCommentAdd" class="btn btn-primary btn-sm" >
-                                    <?php echo $current_lang == 'ar' ? 'نشر التعليق' : 'Post Comment'; ?>
+                                    <?php echo $lang['post_comment']; ?>
                                 </button>
                             </div>
                             <!-- end cancelButton -->
@@ -210,7 +211,7 @@
 
                     <!-- modal-footer/closeButton -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo $current_lang == 'ar' ? 'إغلاق' : 'Close'; ?></button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo $lang['close']; ?></button>
                     </div>
                     <!--  -->
                 <!-- end modal-content -->

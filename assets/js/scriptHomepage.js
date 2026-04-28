@@ -99,8 +99,10 @@ function toggleLike(commentID, currentStatus, element) {
 function addComment(taskID) {
     let commentText = document.getElementById('commentTextarea').value.trim();
     if (commentText === '') {
-        alert('Please enter a comment before submitting.');
+        document.getElementById('commentTextareaError').classList.remove('d-none');
         return;
+    } else {
+        document.getElementById('commentTextareaError').classList.add('d-none');
     }
     
     const formData = new FormData();
